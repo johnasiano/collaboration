@@ -1,0 +1,27 @@
+// Pages
+.app-main {
+    .container {
+        max-width: 380px;
+        margin-left: auto;
+        margin-right: auto;
+        // @include media-breakpoint-up(sm) {
+        //   // max-width: 980px;
+        //   margin-left: auto;
+        //   margin-right: auto;
+        // }
+        @include media-breakpoint-up(lg) {
+            max-width: 1440px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+    @import "pages/Layout/base";
+    
+    @import "pages/Home/placement1";
+    @import "pages/Home/placement2";
+    @import "pages/Home/placement3";
+    @import "pages/Home/placement4";
+    @import "pages/Home/placement5";
+    @import "pages/Home/placement6";
+    @import "pages/Home/placement7";
+}

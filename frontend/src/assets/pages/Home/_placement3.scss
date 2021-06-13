@@ -1,0 +1,48 @@
+.placement-3 {    
+    .container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background: #F2F2F2;
+        height: 600px;
+        .left {
+            width: 50%;
+            height: 100%;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .image {
+                width: 320px;
+                height: 360px;
+            }
+        }
+        .right {
+            color: black;
+            width: 50%;
+            height: 100%;
+            padding: 180px 115px;
+            background: white;
+            .title {
+                font-size: 24px;
+                font-weight: 700;
+            }
+            .description {
+                font-size: 20px;
+                font-weight: 400;
+                margin-top: 40px;
+            }
+            .learn-button {
+                border-radius: 5px;
+                width: 200px;
+                height: 60px;
+                background: white;
+                border: 1px solid black;
+                color: black;
+                font-size: 18px;
+                font-weight: 400;
+                margin-top: 50px;
+            }
+        }
+    }
+}
