@@ -135,7 +135,7 @@ export default function HeaderUserbox() {
               alert('Profile settings click');
             }}>Profile settings</ListItem> */}
             <ListItem button onClick={()=>{
-              history.push('auth/login');
+              history.push('/home');
               dispatch(logout());
             }}>Sign out</ListItem>
             <Divider className="w-100" />

@@ -9,7 +9,6 @@ const bcrypt = require("bcryptjs")
 
 router.post('/signup', celebrate(validator.signup), async (req, res, next) => {
   try {
-
     const saltRounds = 10;
     bcrypt.genSalt( saltRounds, function (err, salt) {
       if (err) {
@@ -19,7 +18,6 @@ router.post('/signup', celebrate(validator.signup), async (req, res, next) => {
           if (err) {
             throw err
           } else {
-            // console.log(hashed_password)
             let user = await db.users.findOne({
               where: {
                 email: req.body.email,
@@ -35,13 +33,13 @@ router.post('/signup', celebrate(validator.signup), async (req, res, next) => {
                 last_login: moment().format('DD/MM/YYYY HH:MM')
               })
               res.json({
-                state: 'success',
+                success: true,
                 message: 'Regular account register successful',
                 email: req.body.email
               })
             } else {
               res.json({
-                state: 'failed',
+                success: false,
                 message: 'The user already exists.'
               })
             }            
@@ -75,14 +73,14 @@ router.post('/signin', celebrate(validator.signin), async (req, res, next) => {
           throw err
         } else if (!isMatch) {
           res.json({
-            state: 'failed',
+            success: false,
             message: 'Oops! Password is incorrect.'
           })
         } else {
           user.last_login = moment().format('DD/MM/YYYY HH:MM');
           await user.save();
           res.json({
-            state: 'success',
+            success: true,
             user,
             accessToken: helper.getAccessToken(user.toJSON())
           })                    
@@ -94,6 +92,97 @@ router.post('/signin', celebrate(validator.signin), async (req, res, next) => {
   }
 });
 
+
+router.post('/google/signup', celebrate(validator.googleSignup), async (req, res, next) => {
+  try {
+    
+    let socialUser = await db.sociallogin.findOne({
+      where: {
+        email: req.body.email
+      }
+    });
+
+    if (socialUser) {
+      res.json({
+        state: 'failed',
+        message: 'Oops! Already exist google account!'
+      })
+    } else {
+      let user = await db.users.create({
+        name: req.body.name,
+        email: req.body.email,  
+        password: 'google-login',
+        role: req.body.role,
+        last_login: moment().format('DD/MM/YYYY HH:MM')
+      })
+
+      await db.sociallogin.create({
+        userId: user.id,
+        email: req.body.email,  
+        type: 'google',
+        content: req.body.content
+      })
+
+      res.json({
+        success: true,
+        user,
+        accessToken: helper.getAccessToken(user.toJSON())
+      })    
+    } 
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/google/signin', celebrate(validator.googleSignin), async (req, res, next) => {
+  try {
+    
+    let socialUser = await db.sociallogin.findOne({
+      where: {
+        email: req.body.email
+      }
+    });
+
+    if (!socialUser) {
+      let user = await db.users.create({
+        name: req.body.name,
+        email: req.body.email,  
+        password: 'google-login',
+        role: req.body.role,
+        last_login: moment().format('DD/MM/YYYY HH:MM')
+      })
+
+      await db.sociallogin.create({
+        userId: user.id,
+        email: req.body.email,  
+        type: 'google',
+        content: req.body.content
+      })
+
+      res.json({
+        success: true,
+        user,
+        accessToken: helper.getAccessToken(user.toJSON())
+      }) 
+    } else {
+      let user = await db.users.findOne({
+        where: {
+          id: socialUser.userId,
+          role: 'user'
+        }
+      });
+      user.last_login = moment().format('DD/MM/YYYY HH:MM');
+      await user.save();
+      res.json({
+        success: true,
+        user,
+        accessToken: helper.getAccessToken(user.toJSON())
+      })    
+    } 
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.post('/passchange', async (req, res, next) => {
   try {

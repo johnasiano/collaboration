@@ -11,10 +11,13 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: Sequelize.STRING(255)
     },
-    last_login: Sequelize.STRING(255),
     role: {
       type: Sequelize.STRING(255)
-    }
+    },
+    social_type: {
+      type: Sequelize.STRING(255)
+    },
+    last_login: Sequelize.STRING(255),    
   }, {});
   User.associate = function (models) {
     // associations can be defined here

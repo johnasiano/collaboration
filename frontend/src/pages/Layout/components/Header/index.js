@@ -1,11 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import * as StripeService from 'services/stripe.service';
-
-const stripePromise = loadStripe('pk_test_51J1AKiBTewu70IwysHyusGzgrESeBujmCzNermAeJuUnZKfe1YiZm0WnZDHlKYwXTCTYwtPetxkfjKiqNgDzpFFl00VIdYZmYn');
+import useRouter from 'utils/useRouter';
+import { storageUserKey } from "utils/constants";
+import {login} from 'store/modules/auth/actions';
+import { useDispatch } from 'react-redux';
 
 const Header = ({ isErrorPage }) => {
   const arrayPaths = ['/'];  
+
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -23,30 +28,20 @@ const Header = ({ isErrorPage }) => {
     setSearchOpen(false);
   }
 
-  const handleSubscribeClick = async (event) => {
-    // Get Stripe.js instance
-    const stripe = await stripePromise;
-
-    // Call your backend to create the Checkout Session
-    // const response = await fetch('/create-checkout-session', { method: 'POST' });
-    const priceIdType = "month";
-    StripeService.subscriptionCheckoutSession(priceIdType).then(async data=>{
-      // When the customer clicks on the button, redirect them to Checkout.
-      const result = await stripe.redirectToCheckout({
-        sessionId: data.sessionId
-      }).then(result=>{
-        if (result.error) {
-          console.log('subscription error', result.error.message);
-        }
-      });
-
-      if (result.error) {
-        // If `redirectToCheckout` fails due to a browser or network
-        // error, display the localized error message to your customer
-        // using `result.error.message`.
-      }
-    })
-  };
+  const handleSubscribeClick = (event) => {
+    console.log('storage user key')
+    const current_user = JSON.parse(localStorage.getItem(storageUserKey));
+    if (current_user) {
+      dispatch(login({
+        user: current_user.user,
+        accessToken: '',
+        isAdmin: false
+      }));
+      router.history.push('/user/dashboard');
+    } else {
+      router.history.push('/user/login');
+    }
+  }
 
   return(
     <header className={`container site-header`}>

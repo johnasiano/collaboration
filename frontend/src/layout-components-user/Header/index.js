@@ -101,7 +101,7 @@ const Header = props => {
           <Box className="d-flex align-items-center">
             <HeaderDots />
             <HeaderUserbox />
-            <HeaderDrawer />
+            {/* <HeaderDrawer /> */}
             <Box className="toggle-sidebar-btn-mobile">
               <Tooltip title="Toggle Sidebar" placement="right">
                 <IconButton

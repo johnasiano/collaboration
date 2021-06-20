@@ -4,7 +4,7 @@ import { storageTokenKey, storageUserKey } from "utils/constants"
 ////////// For regular account ////////////
 export const signinAccount = async (accountInfo) => {
   try {
-    const result =  await post('/api/admin/login', accountInfo);      
+    const result =  await post('/api/auth/signin', accountInfo);      
     return result;
   } catch (error) {
     throw error
@@ -20,20 +20,40 @@ export const signupAccount = async (accountInfo) => {
   }
 }
 
-export const passwordChange = async (passwordInfo) => {
+////////// For google account ////////////
+export const signinAccountGoogle = async (accountInfo) => {
   try {
-    const result = await post('/api/auth/passchange', passwordInfo);
+    const result =  await post('/api/auth/google/signin', accountInfo);      
     return result;
   } catch (error) {
     throw error
   }
 }
 
-export const forgotPassword = async (accountInfo) => {
+export const signupAccountGoogle = async (accountInfo) => {
   try {
-    const result = await post('/api/auth/forgot', accountInfo);
+    const result = await post('/api/auth/google/signup', accountInfo);
     return result;
   } catch (error) {
     throw error
   }
 }
+
+
+// export const passwordChange = async (passwordInfo) => {
+//   try {
+//     const result = await post('/api/auth/passchange', passwordInfo);
+//     return result;
+//   } catch (error) {
+//     throw error
+//   }
+// }
+
+// export const forgotPassword = async (accountInfo) => {
+//   try {
+//     const result = await post('/api/auth/forgot', accountInfo);
+//     return result;
+//   } catch (error) {
+//     throw error
+//   }
+// }

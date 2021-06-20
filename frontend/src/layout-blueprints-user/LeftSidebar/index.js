@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 import { connect } from 'react-redux';
 
-import { Sidebar, Header, Footer, ThemeConfigurator } from '../../layout-components-admin';
+import { Sidebar, Header, Footer, ThemeConfigurator } from '../../layout-components-user';
 import * as CategoryService from 'services/category.service';
 import * as UserService from 'services/user.service';
 import * as ProductService from 'services/product.service';
@@ -33,21 +33,12 @@ const LeftSidebar = props => {
     if (current_user) {
       dispatch(login({
         user: current_user.user,
-        accessToken: '',
-        isAdmin: true
+        accessToken: current_user.accessToken,
+        isAdmin: false
       }));
     } else {
-      router.history.push('/admin/auth/login');
+      router.history.push('/user/login');
     }
-    // CategoryService.getCategory().then((result=>{
-    //   dispatch(setCategory(result.allCategories));
-    // }))
-    // UserService.getUsers().then((result=>{
-    //   dispatch(setUsers(result.users));
-    // }));
-    // ProductService.getProductAll().then(result=>{
-    //   dispatch(setProducts(result.products));
-    // });
   }, [])
 
   return (

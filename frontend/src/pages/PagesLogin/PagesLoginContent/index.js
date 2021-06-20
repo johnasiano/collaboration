@@ -1,8 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import validate from 'validate.js';
-import { useDispatch } from 'react-redux';
+
 import {
   Grid,
   Container,
@@ -14,19 +12,23 @@ import {
   Card,
   CardContent,
   Button,
-  FormControl,
+  FormControl
 } from '@material-ui/core';
 
 import MailOutlineTwoToneIcon from '@material-ui/icons/MailOutlineTwoTone';
 import LockTwoToneIcon from '@material-ui/icons/LockTwoTone';
+import { useGoogleLogin } from "react-google-login";
 
-import svgImage9 from '../../assets/images/illustrations/login.svg';
+import svgImage9 from '../../../assets/images/illustrations/login.svg';
+
+import { NavLink as RouterLink, Link } from 'react-router-dom';
+import validate from 'validate.js';
+import { useDispatch } from 'react-redux';
+import cogoToast from 'cogo-toast';
 
 import useRouter from 'utils/useRouter';
-import { signinAccount } from 'services/auth.service';
+import { signinAccount, signinAccountGoogle } from 'services/auth.service';
 import {login} from 'store/modules/auth/actions';
-
-import cogoToast from 'cogo-toast';
 
 const schema = {
   email: {
@@ -38,12 +40,13 @@ const schema = {
   }
 };
 
+const clientId = "1028376226556-i5o1lsujlo30540dn95sn4l0pjq56olh.apps.googleusercontent.com";
 const Login = () => {
   const [checked1, setChecked1] = React.useState(true);
 
   const router = useRouter();
   const dispatch = useDispatch();
-  
+
   const [formState, setFormState] = useState({
     isValid: false,
     values: {},
@@ -60,6 +63,36 @@ const Login = () => {
       errors: errors || {}
     }));
   }, [formState.values]);
+
+  const onSuccess = (res) => {
+    const accountInfo = {
+      email: res.profileObj.email,
+      name: res.profileObj.name,
+      role: 'user',
+      content: res
+    }
+
+    signinAccountGoogle(accountInfo).then((result) => {
+      if (result.success) {
+        dispatch(login({
+          user: result.user,
+          accessToken: result.accessToken,
+        }));
+        cogoToast.success('Login successfully!', { position: 'top-right'});
+        router.history.push('/user/dashboard');
+      } else {
+        cogoToast.error(result.message, { position: 'top-right'});
+      }
+    })
+  };
+  const onFailure = (res) => {
+    cogoToast.error('Failed google login', { position: 'top-right'});
+  };
+  const { signIn } = useGoogleLogin({
+    onSuccess,
+    onFailure,
+    clientId,
+  });
 
   const handleChange1 = event => {
     setChecked1(event.target.checked);
@@ -89,20 +122,21 @@ const Login = () => {
     
     const accountInfo = {
       email: formState.values.email,
-      password: formState.values.password
+      password: formState.values.password,
+      role: "user"
     }
 
     signinAccount(accountInfo).then((result) => {
       console.log('result', result);
-      if (result.loginSuccess) {
+      if (result.success) {
         dispatch(login({
-          user: result.admin,
-          accessToken: '',
+          user: result.user,
+          accessToken: result.accessToken,
         }));
         cogoToast.success('Login successfully!', { position: 'top-right'});
-        router.history.push('/admin/dashboard');
+        router.history.push('/user/dashboard');
       } else {
-        // cogoToast.error(result.message, { position: 'top-right'});
+        cogoToast.error(result.message, { position: 'top-right'});
       }
     })
     
@@ -110,11 +144,23 @@ const Login = () => {
   
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
-    
+
   return (
     <Fragment>
       <div className="app-wrapper min-vh-100">
         <div className="app-main flex-column">
+          <Button
+            size="large"
+            variant="outlined"
+            color="primary"
+            component={RouterLink}
+            className="btn-go-back"
+            to="/home">
+            <span className="btn-wrapper--icon">
+              <FontAwesomeIcon icon={['fas', 'arrow-left']} />
+            </span>
+            <span className="btn-wrapper--label">Back to Home</span>
+          </Button>
           <div className="app-content p-0">
             <div className="app-content--inner d-flex align-items-center">
               <div className="flex-grow-1 w-100 d-flex align-items-center">
@@ -147,12 +193,24 @@ const Login = () => {
                           </p>
                         </span>
                         <Card className="m-0 w-100 p-0 border-0">
-                          {/* <div className="card-header d-block p-3 mx-2 mb-0 mt-2 rounded border-0">
+                          <div className="card-header d-block p-3 mx-2 mb-0 mt-2 rounded border-0">
                             <div className="text-muted text-center mb-3">
                               <span>Sign in with</span>
                             </div>
                             <div className="text-center">
                               <Button
+                                variant="outlined"
+                                className="mr-2 text-google"
+                                onClick={signIn}
+                              >
+                                <span className="btn-wrapper--icon">
+                                  <FontAwesomeIcon icon={['fab', 'google']} />
+                                </span>
+                                <span className="btn-wrapper--label">
+                                  Google
+                                </span>
+                              </Button>
+                              {/* <Button
                                 variant="outlined"
                                 className="mr-2 text-facebook">
                                 <span className="btn-wrapper--icon">
@@ -171,12 +229,12 @@ const Login = () => {
                                 <span className="btn-wrapper--label">
                                   Twitter
                                 </span>
-                              </Button>
+                              </Button> */}
                             </div>
-                          </div> */}
+                          </div>
                           <CardContent className="p-3">
                             <div className="text-center text-black-50 mb-3">
-                              <span>Sign in with credentials</span>
+                              <span>Or sign in with credentials</span>
                             </div>
                             <form className="px-5">
                               <div className="mb-3">
@@ -232,6 +290,11 @@ const Login = () => {
                                   }
                                   label="Remember me"
                                 />
+                              </div>
+                              <div className="w-100">
+                                <Link to='/user/register'>
+                                  Don't have account?
+                                </Link>
                               </div>
                               <div className="text-center">
                                 <Button

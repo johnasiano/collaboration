@@ -7,7 +7,7 @@ import { IconButton, Box } from '@material-ui/core';
 
 import { connect } from 'react-redux';
 
-import projectLogo from '../../assets/images/app-icon.png';
+import projectLogo from '../../assets/images/react.svg';
 
 const HeaderLogo = props => {
   const { sidebarToggle, sidebarHover } = props;
@@ -26,14 +26,14 @@ const HeaderLogo = props => {
               color="primary"
               size="medium"
               className="header-logo-wrapper-btn">
-              {/* <img
+              <img
                 className="app-header-logo-img"
                 alt="Carolina React Admin Dashboard with Material-UI PRO"
                 src={projectLogo}
-              /> */}
+              />
             </IconButton>
           </Link>
-          {/* <Box className="header-logo-text">YGO-LEGACY</Box> */}
+          <Box className="header-logo-text">WEB APP Title</Box>
         </Box>
       </div>
     </Fragment>
