@@ -4,7 +4,8 @@ body {
   .app-sidebar-heading {
     padding: $spacer $spacer ($spacer / 1.1);
     font-weight: bold;
-    color: $blue;
+    // color: $blue;
+    color: $gray-600;
     text-transform: uppercase;
     font-size: $font-size-sm;
     white-space: nowrap;
@@ -34,7 +35,8 @@ body {
 
     &.active,
     &:hover {
-      color: $primary;
+      // color: $primary;
+      color: white;
       background: $gray-300;
     }
   }
@@ -53,20 +55,32 @@ body {
     }
 
     font-size: 14px;
-    color: $blue;
+    color: gray;
+    // color: $blue;
 
     &.active,
     &:hover {
       background: none;
-      color: $primary;
+      // color: $primary;
+      color: white;
+      .app-sidebar-icon {
+        color: white;
+      }
     }
   }
 
   .app-sidebar-icon {
-    color: theme-color($primary);
+    // color: theme-color($primary);
+    color: gray;
     display: flex;
     align-items: center;
     margin-right: 16px;
+    // &.active,
+    // &:hover {
+    //   background: none;
+    //   // color: $primary;
+    //   color: white;
+    // }
   }
 
   .sidebar-expand-icon {
@@ -89,10 +103,12 @@ body {
   }
 
   .active-item {
-    color: $primary;
+    // color: $primary;
+    color: white;
     font-weight: 500;
     .app-sidebar-icon {
-      color: $primary;
+      // color: $primary;
+      color: white;
     }
   }
 }

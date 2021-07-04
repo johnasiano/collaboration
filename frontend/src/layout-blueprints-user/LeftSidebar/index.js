@@ -56,10 +56,10 @@ const LeftSidebar = props => {
               'app-content-sidebar-fixed': sidebarFixed,
               'app-content-footer-fixed': footerFixed
             })}>
-            <div className="app-content--inner">
+            <div>
               <div className="app-content--inner__wrapper">{children}</div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
           </div>
           <ThemeConfigurator />
         </div>

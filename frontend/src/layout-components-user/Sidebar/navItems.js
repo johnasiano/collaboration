@@ -28,13 +28,19 @@ import HomeIcon from '@material-ui/icons/Home';
 
 export default [
   {
-    label: 'HOME',
+    label: 'MENU',
     content: [
       {
-        label: 'Dashboard',
+        label: 'Prop Hunter',
         icon: DashboardTwoToneIcon,
         description: 'This page can be used to create a login section for your users.',
-        to: '/admin/dashboard'
+        to: '/user/dashboard'
+      },
+      {
+        label: 'Contest',
+        icon: CodeIcon,
+        description: 'This page can be used to create a login section for your users.',
+        to: '/user/contest'
       }
     ],    
   },  

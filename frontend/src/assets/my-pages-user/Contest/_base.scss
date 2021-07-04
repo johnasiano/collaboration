@@ -1,0 +1,180 @@
+.contest-header {
+    // height: 50px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background: #4D4D4D;
+    position: fixed;
+    color: white;
+    border-bottom: 4px solid #1D1C1E;
+    z-index: 1;
+}
+
+.custom-react-tabs__tab-list {
+    margin: 0 0 0px;
+    padding: 10px 10px 1px;
+    background: #4D4D4D;
+}
+
+.react-tabs__tab--selected {
+    color: white;
+    border-bottom: 4px solid #F3601B;
+}
+
+.custom-react-tabs__tab {
+    display: inline-block;
+    bottom: -1px;
+    position: relative;
+    list-style: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    color: white;
+}
+
+.contest-content {
+    height: calc(100vh - 74px);
+    background: #2B2A2C;
+    overflow: auto;
+    padding-top: 50px;
+    color: white;
+
+    &--featured {
+
+    }
+    &--nba {
+        
+    }
+
+    &__post {
+        width: 100%;
+        background: #1D1C1E;
+        border-bottom: 3px solid #474648;
+        .image-content {
+            width: 1024px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            .post-img {
+                margin: 2px;
+            }
+        }
+    }
+    &__control {
+        width: 1024px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;        
+        &--right {
+            display: flex;
+            padding: 20px 0px;
+            .control-item {
+                display: flex;
+                align-items: center;
+                margin-right: 15px;
+                .plus-icon {
+                    color:#9ae200;
+                    font-size: 15px;
+                    margin-right: 5px;
+                }
+            }
+        }
+        &--left {
+            padding: 20px 0px;            
+        }        
+    }
+    &__table {
+        width: 1024px;
+        margin: 0 auto;
+        color: black;
+        .react-grid-Grid {
+            border: none;
+        }
+        .react-grid-Header {
+            box-shadow: none;
+        }
+        .react-grid-HeaderCell {
+            background:#1D1C1E;
+            color: white;
+            border: none;
+        }
+    }
+    &__modal {
+        width: 750px;
+        position: relative;
+        .close {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+        }
+        .header {
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            background: #1D1C1E;
+            color: white;
+            &--right {
+                display: flex;
+                &__info {
+                    padding-left: 20px;
+                    .title {
+                        font-size: 23px;
+                        font-weight: bold;
+                        text-overflow: ellipsis;
+                    }
+                    .entry-info {
+                        display: flex;
+                        padding-top: 10px;
+                        padding: 5px 10px;
+                        font-size: 12px;
+                        background: #383739;
+                        border-radius: 3px;
+                        &--item {
+                            padding-right: 50px;
+                        }
+                    }
+                }
+            }
+            &--left {
+                .live-title {
+                    color: #f3b700;
+                    text-transform: uppercase;
+                    font-size: 13px;
+                    font-weight: 700;
+                }
+                .down-time {
+                    font-size: 24px;
+                    line-height: 28px;
+                    display: block;
+                    font-weight: 600;
+                }
+                .start-time {
+                    font-size: 13px;
+                    font-weight: 100;
+                }
+            }
+        }
+        .content {
+            background: #E9E8EA;
+            height: 500px;
+        }
+        .footer {
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            &--info {
+                display: flex;
+                flex-direction: column;
+            }
+            .draft-team-btn {
+                background-color: #53d337;
+                color: black;
+                border:none;
+                padding: 10px 15px;
+                font-weight: bold;
+                border-radius: 5px;
+            }
+        }
+    }
+}

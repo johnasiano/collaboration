@@ -40,6 +40,7 @@ const Cards1 = lazy(() => import('./example-pages/Cards1'));
 
 // User Pages
 const UserDashboard = lazy(() => import('my-pages-user/Dashboard'));
+const UserContest = lazy(() => import('my-pages-user/Contest'));
 const Membership = lazy(() => import('my-pages-user/Membership'));
 const MembershipSuccess = lazy(() => import('my-pages-user/MembershipSuccess'));
 
@@ -199,6 +200,7 @@ const Routes = () => {
                     <Route
                         path={[
                             '/user/dashboard',
+                            '/user/contest',
                             '/user/membership',
                             '/payment/success',
                         ]}
@@ -214,6 +216,10 @@ const Routes = () => {
                                     <Route
                                         path="/user/dashboard"
                                         component={UserDashboard}
+                                    />
+                                    <Route
+                                        path="/user/contest"
+                                        component={UserContest}
                                     />
                                     <Route
                                         path="/user/membership"

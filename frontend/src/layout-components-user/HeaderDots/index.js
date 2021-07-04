@@ -12,8 +12,8 @@ import useRouter from 'utils/useRouter';
 const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
-    background: '#3ea23e',
-    color: '#ffffff',
+    background: '#53d337',
+    color: '#000000',
     fontWeight: 'bold',
     fontSize:'15px',
     '&:hover': {
@@ -58,7 +58,6 @@ export default function HeaderDots() {
         <Box component="span" pr="2">
           <Button
             variant="contained"
-            color="default"
             className={classes.button}
             onClick={handleMembership}
           >

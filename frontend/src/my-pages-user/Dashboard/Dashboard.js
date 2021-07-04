@@ -35,10 +35,10 @@ const Dashboard = () => {
 
   return (
     <Fragment>
-      <PageTitle
+      {/* <PageTitle
           titleHeading="Dashboard"
           titleDescription="Welcome"
-      />
+      /> */}
       <Grid
         className={classes.container}
         container

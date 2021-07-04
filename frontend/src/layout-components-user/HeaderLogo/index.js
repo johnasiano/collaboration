@@ -33,7 +33,7 @@ const HeaderLogo = props => {
               />
             </IconButton>
           </Link>
-          <Box className="header-logo-text">WEB APP Title</Box>
+          <Box className="header-logo-text">Collaboration</Box>
         </Box>
       </div>
     </Fragment>

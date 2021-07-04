@@ -13,6 +13,7 @@ body {
 
   .app-sidebar-menu {
     height: calc(100vh - #{$header-height});
+    background: #2B2A2C;
   }
 
   .app-sidebar-wrapper {
